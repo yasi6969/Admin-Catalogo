@@ -54,6 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="mensaje-estado" id="mensajeEstadoEditar"></div>
                 <button type="button" id="editarProductoBtn" class="btn-editar-producto">Guardar Cambios</button>
             </form>
+            
+
         </div>
     `;
     document.body.appendChild(modalEdicion);
