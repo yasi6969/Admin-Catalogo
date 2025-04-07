@@ -143,15 +143,43 @@ document.addEventListener('DOMContentLoaded', () => {
     categoriaSelect.addEventListener('change', () => {
         const categoria = categoriaSelect.value;
         const categoriaNumero = categoria.replace('categoria', '');
+        const idInput = document.getElementById('id-editar');
+        const idLabel = document.querySelector('label[for="id-editar"]');
         
         // Mantener el resto del ID si ya existe
         const idActual = idInput.value;
         const partes = idActual.split('-');
         
-        if (partes.length > 1) {
-            idInput.value = `C${categoriaNumero}-${partes[1]}`;
+        if (categoria === '') {
+            // Si no hay categoría seleccionada, deshabilitar y poner en gris
+            idInput.value = '';
+            idInput.classList.remove('valido');
+            idInput.classList.add('invalido');
+            idInput.disabled = true;
+            
+            // Aplicar clase de inválido al título
+            if (idLabel) {
+                idLabel.classList.remove('valido');
+                idLabel.classList.add('invalido');
+            }
         } else {
-            idInput.value = `C${categoriaNumero}-1`;
+            // Habilitar input y actualizar valor
+            idInput.disabled = false;
+            
+            if (partes.length > 1) {
+                idInput.value = `C${categoriaNumero}-${partes[1]}`;
+            } else {
+                idInput.value = `C${categoriaNumero}-1`;
+            }
+            
+            // Validar el input de ID
+            validarEntrada(idInput);
+            
+            // Restaurar clase del título
+            if (idLabel) {
+                idLabel.classList.remove('invalido');
+                idLabel.classList.add('valido');
+            }
         }
     });
 
@@ -177,6 +205,89 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Función de validación de formulario
+    function validarEntrada(entrada) {
+        const valor = entrada.value.trim();
+        const etiqueta = entrada.closest('.input-group').querySelector('label');
+        
+        // Manejo especial para entrada de enlace
+        if (entrada.id === 'enlace-editar') {
+            if (valor) {
+                entrada.classList.remove('invalido');
+                entrada.classList.add('valido');
+                if (etiqueta) {
+                    etiqueta.classList.remove('invalido');
+                    etiqueta.classList.add('valido');
+                }
+            } else {
+                entrada.classList.remove('valido');
+                entrada.classList.add('invalido');
+                if (etiqueta) {
+                    etiqueta.classList.remove('valido');
+                    etiqueta.classList.add('invalido');
+                }
+            }
+            return;
+        }
+        
+        // Manejo especial para entrada de imagen
+        if (entrada.id === 'imagen-editar') {
+            if (valor) {
+                entrada.classList.remove('invalido');
+                entrada.classList.add('valido');
+                if (etiqueta) {
+                    etiqueta.classList.remove('invalido');
+                    etiqueta.classList.add('valido');
+                }
+            } else {
+                // Si está vacío al salir del input, establecer valor predeterminado
+                entrada.value = '/imagenes/catalogo/producto_sin_definir.png';
+                entrada.classList.remove('invalido');
+                entrada.classList.add('valido');
+                if (etiqueta) {
+                    etiqueta.classList.remove('invalido');
+                    etiqueta.classList.add('valido');
+                }
+            }
+            return;
+        }
+        
+        // Validación predeterminada para otras entradas
+        if (entrada.hasAttribute('required')) {
+            if (valor) {
+                entrada.classList.remove('invalido');
+                entrada.classList.add('valido');
+                if (etiqueta) {
+                    etiqueta.classList.remove('invalido');
+                    etiqueta.classList.add('valido');
+                }
+            } else {
+                entrada.classList.remove('valido');
+                entrada.classList.add('invalido');
+                if (etiqueta) {
+                    etiqueta.classList.remove('valido');
+                    etiqueta.classList.add('invalido');
+                }
+            }
+        }
+    }
+
+    // Añadir validación a entradas requeridas
+    const entradasRequeridas = [
+        categoriaSelect, 
+        descripcionCortaInput, 
+        document.getElementById('descripcionLarga-editar'), 
+        idInput, 
+        precioInput,
+        document.getElementById('enlace-editar'), // Añadir entrada de enlace a validación
+        document.getElementById('imagen-editar') // Añadir entrada de imagen a validación
+    ];
+
+    entradasRequeridas.forEach(entrada => {
+        entrada.addEventListener('input', () => validarEntrada(entrada));
+        entrada.addEventListener('blur', () => validarEntrada(entrada));
+    });
+
     // Función para extraer texto de enlace de WhatsApp
     function extraerTextoEnlaceWhatsApp(enlace) {
         if (!enlace) return '';
@@ -199,13 +310,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const textoEnlace = extraerTextoEnlaceWhatsApp(producto.enlace);
         document.getElementById('enlace-editar').value = textoEnlace;
         
+        // Establecer valor de imagen
+        document.getElementById('imagen-editar').value = producto.imagen || '';
+        
         document.getElementById('id-editar').value = producto.id;
-        document.getElementById('imagen-editar').value = producto.imagen;
         document.getElementById('precio-editar').value = producto.precio;
         
         // Almacenar ID de Firestore para la edición
         modalEdicion.dataset.firestoreId = producto.firestore_id;
         modalEdicion.dataset.descripcionOriginal = producto.descripcion_corta;
+        
+        // Validar todas las entradas cuando se abre el modal
+        const entradasRequeridas = [
+            document.getElementById('categoria-editar'),
+            document.getElementById('descripcionCorta-editar'), 
+            document.getElementById('descripcionLarga-editar'), 
+            document.getElementById('id-editar'), 
+            document.getElementById('precio-editar'),
+            document.getElementById('enlace-editar'),
+            document.getElementById('imagen-editar')
+        ];
+        
+        entradasRequeridas.forEach(entrada => {
+            validarEntrada(entrada);
+        });
     }
 
     // Modificar evento de guardar para usar enlace generado

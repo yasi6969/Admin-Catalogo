@@ -191,7 +191,7 @@ button:hover {
   background-color: transparent;
   backdrop-filter: blur(30px);
   color: #fff;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
 }
 
 .modal-buttons {
@@ -235,34 +235,56 @@ button:hover {
   height: 50px; 
   width: 100%;
 }
-@media screen and (max-width: 391px) {
+@media screen and (max-width: 392px) {
   .main-actions{
     flex-direction: column; 
   }
   
 }
 
+.boton {
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+#btn-agregar:hover,
+#btn-editar:hover,
+#btn-eliminar:hover {
+  background: linear-gradient(45deg, transparent, var(--color-bg), transparent);
+  background-size: 250% 250%;
+}
+#btn-agregar.active,
+#btn-editar.active,
+#btn-eliminar.active {
+  box-shadow: 0 0 30px var(--color-bg);
+  background: linear-gradient(45deg, transparent, var(--color-bg), transparent);
+  background-size: 250% 250%;
+}
+
 #btn-agregar {
-background: linear-gradient(45deg, transparent, #09ff006e, transparent);
-background-size: 250% 250%;
-border: 1px solid #09ff006e;
+  --color-bg: #09ff006e;
+  background-color: var(--color-bg);
+  border: 2px solid #09ff00;
 }
 
 #btn-editar {
-background: linear-gradient(45deg, transparent, #e100ff6e, transparent);
-background-size: 250% 250%;
-border: 1px solid #e100ff6e;
+  --color-bg: #e100ff6e;
+  background-color: var(--color-bg);
+  border: 2px solid #e100ff;
 }
 
 #btn-eliminar {
-background: linear-gradient(45deg, transparent, #ff00006e, transparent);
-background-size: 250% 250%;
-border: 1px solid #ff00006e;
+  --color-bg: #ff00006e;
+  background-color: var(--color-bg);
+  border: 2px solid #ff0000;
 }
 
 
 
-
+@keyframes shine {
+  0% { background-position: -250% 0; }
+  100% { background-position: 250% 0; }
+}
 
 #formularioAgregarProducto label {
   color: #fff;
@@ -274,7 +296,7 @@ border: 1px solid #ff00006e;
 #formularioAgregarProducto select {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   border-radius: 4px;
   background-color: transparent;
   color: #fff;
@@ -288,7 +310,7 @@ border: 1px solid #ff00006e;
   margin-top: 30px;
   background-color: transparent;
   backdrop-filter: blur(5px);
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   border-radius: 10px;
   box-shadow: 0 4px 10px #666;
 }
@@ -347,7 +369,7 @@ max-height: 200px;
     font-size: 1.1em;
     max-width: 700px;
     width: 100%;
-    border: 1px solid #fff;
+    border: 2px solid #fff;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     background-color: transparent;
     transition: transform 0.3s ease;
@@ -382,7 +404,7 @@ max-height: 200px;
   text-align: left;
     margin:10vh auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 2px solid #888;
     width: 90%;
     max-width: 600px;
     border-radius: 10px;
@@ -471,7 +493,7 @@ h2 {
     background-color: transparent;
     backdrop-filter: blur(30px);
     padding: 20px;
-    border: 1px solid hsl(0, 0%, 53%);
+    border: 2px solid hsl(0, 0%, 53%);
     width: 90%;
     color: #fff;
     max-width: 400px;
@@ -572,7 +594,7 @@ h2 {
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 1rem;
   overflow: hidden;
   transition: transform 0.3s;
@@ -682,4 +704,25 @@ body, html {
     transform: translate(50vw, 100vh) rotate(-45deg);
     opacity: 0;
   }
+}
+
+/* Estilos para validación de formularios */
+.valido {
+    color: #58ffff; /* Verde */
+}
+
+.invalido {
+    color: #9E9E9E; /* Gris */
+}
+
+.input-group input.valido,
+.input-group select.valido,
+.input-group textarea.valido {
+    border-color: #58ffff;
+}
+
+.input-group input.invalido,
+.input-group select.invalido,
+.input-group textarea.invalido {
+    border-color: #9E9E9E;
 }
