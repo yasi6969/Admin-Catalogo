@@ -732,6 +732,10 @@ body, html {
 }
 
 .texto-inicial {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
   text-align: center;
   color: white;
   font-size: 2rem;
@@ -739,8 +743,10 @@ body, html {
   opacity: 1;
   transition: opacity 0.3s ease;
   text-wrap: balance;
+  width: 100%;
+  min-height: 200px;
 }
-.texto-inicial.oculto {
-  opacity: 0;
-  display: none;
+
+.texto-inicial h2 {
+  flex-grow: 1;
 }

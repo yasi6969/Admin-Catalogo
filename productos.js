@@ -19,6 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
         btnAgregar.classList.remove('active');
         btnEditar.classList.remove('active');
         btnEliminar.classList.remove('active');
+
+        // Ocultar texto inicial
+        const textoInicial = document.getElementById('texto-inicial');
+        if (textoInicial) {
+            textoInicial.style.display = 'none';
+        }
     }
 
     btnAgregar.addEventListener('click', () => {

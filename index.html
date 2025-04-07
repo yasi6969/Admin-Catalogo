@@ -102,7 +102,7 @@
     <section id="productos-eliminar-grid" style="display:none;"></section>
   </main>
 
-  <div id="texto-inicial" class="texto-inicial">
+  <div id="texto-inicial" style="display:flex;">
     <h2>¿Qué quieres realizar hoy?</h2>
   </div>
   <div id="welcome-modal" class="modal" style="display:none;">
@@ -128,50 +128,6 @@
 
   <script src="login.js"></script>
   <script src="welcome-modal.js"></script>
-  <script>
-    function mostrarSeccion(seccion) {
-        const secciones = document.querySelectorAll('section');
-        secciones.forEach(s => s.style.display = 'none');
-        const seccionSeleccionada = document.getElementById(seccion);
-        if (seccionSeleccionada) {
-            seccionSeleccionada.style.display = 'block';
-        }
-        
-        const filtroContainer = document.getElementById('filtro-productos-container');
-        const productosGrid = document.getElementById('productos-editar-grid');
-        
-        const seccionesMostrarFiltro = ['editar', 'eliminar'];
-        
-        if (seccionesMostrarFiltro.includes(seccion)) {
-            if (filtroContainer) filtroContainer.style.display = 'flex';
-            if (productosGrid) productosGrid.style.display = 'grid';
-            
-            if (seccion === 'editar') {
-                window.cargarProductosEditar();
-            }
-        } else {
-            if (filtroContainer) filtroContainer.style.display = 'none';
-            if (productosGrid) productosGrid.style.display = 'none';
-        }
-    }
-
-    window.mostrarSeccion = mostrarSeccion;
-  </script>
-
-  <script>
-    // Agregar lógica para mostrar/ocultar texto inicial
-    document.addEventListener('DOMContentLoaded', () => {
-      const textoInicial = document.getElementById('texto-inicial');
-      const botonesSeccion = document.querySelectorAll('.boton-seccion');
-
-      botonesSeccion.forEach(boton => {
-        boton.addEventListener('click', () => {
-          textoInicial.classList.add('oculto');
-        });
-      });
-    });
-  </script>
-
   <script src="agregar-productos.js"></script>
   <script src="editar-productos.js"></script>
   <script src="eliminar-productos.js"></script>
