@@ -731,22 +731,16 @@ body, html {
     border-color: #9E9E9E;
 }
 
-.texto-inicial {
-  display: flex;
+#texto-inicial {
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
-  text-align: center;
+  flex: 1 1 0;
   color: white;
   font-size: 2rem;
-  margin-top: 25vh;
-  opacity: 1;
-  transition: opacity 0.3s ease;
   text-wrap: balance;
   width: 100%;
-  min-height: 200px;
-}
-
-.texto-inicial h2 {
-  flex-grow: 1;
+  height: 100vh; 
+  position: fixed; 
+  top: 10%; 
+  left: 0; 
 }
