@@ -712,33 +712,16 @@ body, html {
 }
 
 #texto-inicial {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: var(--color-bg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  color: white;
-  font-size: 2rem;
-  text-wrap: balance;
-  margin: 0;
-  padding: 0;
-  pointer-events: none;
-  transition: opacity 0.1s ease-out, transform 0.4s ease-out;
+color: #fff;
+justify-content: center;
+font-size: clamp(1.5rem, 2vw, 2rem);
 }
 
-#texto-inicial h2 {
-  text-align: center;
-  max-width: 80%;
-}
+
 
 
 html {
-  scrollbar-color: #fff transparent;
+  scrollbar-color: #5b1669 transparent;
   scrollbar-width: thin;
 }
 
