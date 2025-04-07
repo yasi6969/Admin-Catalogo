@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gridEditar = document.getElementById('productos-editar-grid');
     const filtroDescripcion = document.getElementById('filtro-descripcion');
     
-    // Modal de edición
+
     const modalEdicion = document.createElement('div');
     modalEdicion.id = 'modal-edicion-producto';
     modalEdicion.classList.add('modal');
@@ -81,14 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeModalBtn.addEventListener('click', closeModal);
 
-    // Optional: Close modal when clicking outside the modal content
     modalEdicion.addEventListener('click', function(event) {
         if (event.target === modalEdicion) {
             closeModal();
         }
     });
 
-    // Generar enlace de WhatsApp
+
     function generarEnlaceWhatsApp(telefono, mensaje) {
         const enlaceBase = 'https://wa.me/';
         const telefonoLimpio = telefono.replace(/[^\d]/g, '');
@@ -96,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return enlaceCompleto;
     }
 
-    // Mostrar enlace generado sin hipervínculo
+
     function mostrarEnlaceGenerado(enlace) {
         const enlaceGeneradoDiv = document.getElementById('enlace-generado-editar');
         if (enlaceGeneradoDiv) {
@@ -105,11 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Variables para almacenar datos
+
     let enlaceWhatsApp = '';
     let descripcionOriginal = '';
 
-    // Evento para generar enlace dinámicamente
+
     const enlaceInput = document.getElementById('enlace-editar');
     const enlaceGenerado = document.getElementById('enlace-generado-editar');
     const categoriaSelect = document.getElementById('categoria-editar');
@@ -139,31 +138,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Evento para actualizar ID cuando cambia la categoría
+
     categoriaSelect.addEventListener('change', () => {
         const categoria = categoriaSelect.value;
         const categoriaNumero = categoria.replace('categoria', '');
         const idInput = document.getElementById('id-editar');
         const idLabel = document.querySelector('label[for="id-editar"]');
         
-        // Mantener el resto del ID si ya existe
+
         const idActual = idInput.value;
         const partes = idActual.split('-');
         
         if (categoria === '') {
-            // Si no hay categoría seleccionada, deshabilitar y poner en gris
+
             idInput.value = '';
             idInput.classList.remove('valido');
             idInput.classList.add('invalido');
             idInput.disabled = true;
             
-            // Aplicar clase de inválido al título
+
             if (idLabel) {
                 idLabel.classList.remove('valido');
                 idLabel.classList.add('invalido');
             }
         } else {
-            // Habilitar input y actualizar valor
+
             idInput.disabled = false;
             
             if (partes.length > 1) {
@@ -172,10 +171,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 idInput.value = `C${categoriaNumero}-1`;
             }
             
-            // Validar el input de ID
+
             validarEntrada(idInput);
             
-            // Restaurar clase del título
+
             if (idLabel) {
                 idLabel.classList.remove('invalido');
                 idLabel.classList.add('valido');
@@ -183,14 +182,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Formatear precio
+
     const precioInput = document.getElementById('precio-editar');
     
     precioInput.addEventListener('input', () => {
         let valor = precioInput.value.replace(/[^\d]/g, '');
         
         if (valor) {
-            // Formatear con puntos de miles
+
             valor = new Intl.NumberFormat('es-CO', {
                 style: 'currency',
                 currency: 'COP',
@@ -198,19 +197,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 maximumFractionDigits: 0
             }).format(valor);
             
-            // Reemplazar COP por $
+
             valor = valor.replace('COP', '$');
             
             precioInput.value = valor;
         }
     });
 
-    // Función de validación de formulario
+
     function validarEntrada(entrada) {
         const valor = entrada.value.trim();
         const etiqueta = entrada.closest('.input-group').querySelector('label');
         
-        // Manejo especial para entrada de enlace
+
         if (entrada.id === 'enlace-editar') {
             if (valor) {
                 entrada.classList.remove('invalido');
@@ -230,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // Manejo especial para entrada de imagen
+
         if (entrada.id === 'imagen-editar') {
             if (valor) {
                 entrada.classList.remove('invalido');
@@ -240,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     etiqueta.classList.add('valido');
                 }
             } else {
-                // Si está vacío al salir del input, establecer valor predeterminado
+
                 entrada.value = '/imagenes/catalogo/producto_sin_definir.png';
                 entrada.classList.remove('invalido');
                 entrada.classList.add('valido');
@@ -252,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // Validación predeterminada para otras entradas
         if (entrada.hasAttribute('required')) {
             if (valor) {
                 entrada.classList.remove('invalido');
@@ -272,15 +270,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Añadir validación a entradas requeridas
+
     const entradasRequeridas = [
         categoriaSelect, 
         descripcionCortaInput, 
         document.getElementById('descripcionLarga-editar'), 
         idInput, 
         precioInput,
-        document.getElementById('enlace-editar'), // Añadir entrada de enlace a validación
-        document.getElementById('imagen-editar') // Añadir entrada de imagen a validación
+        document.getElementById('enlace-editar'),
+        document.getElementById('imagen-editar')
     ];
 
     entradasRequeridas.forEach(entrada => {
@@ -288,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entrada.addEventListener('blur', () => validarEntrada(entrada));
     });
 
-    // Función para extraer texto de enlace de WhatsApp
+
     function extraerTextoEnlaceWhatsApp(enlace) {
         if (!enlace) return '';
         try {
@@ -300,9 +298,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Cargar datos del producto en el modal de edición
+
     function cargarDatosProductoEnModal(producto) {
-        // Clear any previous success or error messages
+
         const mensajeEstadoEditar = document.getElementById('mensajeEstadoEditar');
         if (mensajeEstadoEditar) {
             mensajeEstadoEditar.textContent = '';
@@ -312,22 +310,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('categoria-editar').value = producto.categoria;
         document.getElementById('descripcionCorta-editar').value = producto.descripcion_corta;
         document.getElementById('descripcionLarga-editar').value = producto.descripcion_larga;
-        
-        // Extraer texto del enlace de WhatsApp
+
         const textoEnlace = extraerTextoEnlaceWhatsApp(producto.enlace);
         document.getElementById('enlace-editar').value = textoEnlace;
-        
-        // Establecer valor de imagen
+
         document.getElementById('imagen-editar').value = producto.imagen || '';
         
         document.getElementById('id-editar').value = producto.id;
         document.getElementById('precio-editar').value = producto.precio;
         
-        // Almacenar ID de Firestore para la edición
         modalEdicion.dataset.firestoreId = producto.firestore_id;
         modalEdicion.dataset.descripcionOriginal = producto.descripcion_corta;
         
-        // Validar todas las entradas cuando se abre el modal
         const entradasRequeridas = [
             document.getElementById('categoria-editar'),
             document.getElementById('descripcionCorta-editar'), 
@@ -343,21 +337,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Modificar evento de guardar para usar enlace generado
     document.getElementById('editarProductoBtn').addEventListener('click', () => {
         const firestoreId = modalEdicion.dataset.firestoreId;
         const nuevoId = document.getElementById('id-editar').value;
 
-        // Generar enlace de WhatsApp
         const textoEnlace = document.getElementById('enlace-editar').value.trim();
         const enlaceWhatsApp = generarEnlaceWhatsApp('573053662867', textoEnlace);
 
-        // Verificar si el ID ya está en uso por otro producto
         window.firebaseDb.collection('productos')
             .where('id', '==', nuevoId)
             .get()
             .then((querySnapshot) => {
-                // Filtrar para excluir el producto actual
                 const productosConMismoId = querySnapshot.docs.filter(
                     doc => doc.id !== firestoreId
                 );
@@ -368,7 +358,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                // Si no hay productos con el mismo ID, proceder con la actualización
                 const producto = {
                     categoria: document.getElementById('categoria-editar').value,
                     descripcion_corta: document.getElementById('descripcionCorta-editar').value,
@@ -379,14 +368,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     precio: document.getElementById('precio-editar').value
                 };
 
-                // Actualizar producto en Firestore
                 window.firebaseDb.collection('productos').doc(firestoreId).update(producto)
                     .then(() => {
                         console.log(`✏️ Producto editado: ${producto.descripcion_corta} (ID: ${producto.id})`);
                         document.getElementById('mensajeEstadoEditar').textContent = 'Producto actualizado exitosamente';
                         document.getElementById('mensajeEstadoEditar').classList.add('exito');
                         
-                        // Cerrar modal y recargar productos
                         setTimeout(() => {
                             closeModal();
                             cargarProductos();
@@ -404,7 +391,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
-    // Función para cargar productos desde Firestore
     function cargarProductos() {
         if (!window.firebaseDb) {
             console.error('Firestore no está inicializado');
@@ -414,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const productosRef = window.firebaseDb.collection('productos');
         
         productosRef.get().then((querySnapshot) => {
-            gridEditar.innerHTML = ''; // Limpiar grid existente
+            gridEditar.innerHTML = ''; 
 
             querySnapshot.forEach((doc) => {
                 const producto = doc.data();
@@ -439,7 +425,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 gridEditar.appendChild(tarjetaProducto);
 
-                // Agregar evento de edición
                 tarjetaProducto.querySelector('.btn-editar-producto').addEventListener('click', () => {
                     const productoEditar = {
                         categoria: producto.categoria,
@@ -461,7 +446,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Filtrar productos
     filtroDescripcion.addEventListener('input', () => {
         const filtro = filtroDescripcion.value.toLowerCase();
         const tarjetas = document.querySelectorAll('.tarjeta-producto');
@@ -472,13 +456,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Cargar productos al iniciar
     cargarProductos();
 
-    // Hacer la función disponible globalmente si es necesario
     window.cargarProductosEditar = cargarProductos;
 
-    // Función para generar ID basado en categoría
     function generarIdPorCategoria(categoria) {
         const mapeoCategoria = {
             'categoria1': 'C1-',
@@ -493,7 +474,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return mapeoCategoria[categoria] || 'C1-';
     }
 
-    // Bloquear edición del prefijo de categoría en ID de edición
     document.getElementById('id-editar').addEventListener('keydown', (e) => {
         const categoriaSeleccionada = document.getElementById('categoria-editar').value;
         
@@ -503,7 +483,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         }
 
-        // Prevenir borrado del prefijo de categoría
         const prefijoCategoria = generarIdPorCategoria(categoriaSeleccionada);
         const cursorPosition = e.target.selectionStart;
         
@@ -514,7 +493,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Establecer prefijo de categoría automáticamente al editar
     document.getElementById('categoria-editar').addEventListener('change', () => {
         const categoriaSeleccionada = document.getElementById('categoria-editar').value;
         const idInput = document.getElementById('id-editar');
@@ -527,12 +505,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const prefijoCategoria = generarIdPorCategoria(categoriaSeleccionada);
         idInput.removeAttribute('disabled');
-        
-        // Limpiar el input si estaba con el mensaje
+
         if (idInput.value === 'Seleccione una categoría primero') {
             idInput.value = prefijoCategoria;
         } else {
-            // Mantener solo el número después del prefijo si ya existe
+
             const valorActual = idInput.value;
             const valorSinPrefijo = valorActual.replace(/^C[1-8]-/, '');
             
