@@ -39,6 +39,13 @@ Este proyecto es una **página web de administración** para un e-commerce, dise
 - Firebase Authentication
 - Firestore Database
 
+## 📸 Capturas de Pantalla
+
+![Captura 1](caps/Captura%20de%20pantalla%20(253).png)
+![Captura 2](caps/Captura%20de%20pantalla%20(254).png)
+![Captura 3](caps/Captura%20de%20pantalla%20(255).png)
+![Captura 4](caps/Captura%20de%20pantalla%20(256).png)
+![Captura 5](caps/Captura%20de%20pantalla%20(257).png)
 
 ## 🚀 Cómo iniciar
 
@@ -103,4 +110,3 @@ firebase.initializeApp(firebaseConfig);
 
 ## 🧑‍💻 Autor
 Desarrollado por Santiago Cardona
-

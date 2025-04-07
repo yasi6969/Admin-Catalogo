@@ -601,7 +601,6 @@ h2 {
 
 .info-producto:hover {
   transform: scale(1.04);
-  box-shadow: 0 0 4px rgba(0, 247, 255, 0.6);
 }
 
 .info-producto img {
@@ -640,8 +639,14 @@ h2 {
 .editar {
   border: 2px solid #00fff2;
 }
+.editar:hover {
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+}
 .eliminar {
   border: 2px solid #f00
+}
+.eliminar:hover {
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
 }
 .btn-editar-producto {
   background: linear-gradient(45deg, #6ae4ff, #0096b0, #0011ff);
@@ -655,7 +660,7 @@ h2 {
 
 
 body, html {
-  background: transparent; 
+  background: #000; 
   position: relative;
   z-index: 0;
 }
@@ -724,4 +729,18 @@ body, html {
 .input-group select.invalido,
 .input-group textarea.invalido {
     border-color: #9E9E9E;
+}
+
+.texto-inicial {
+  text-align: center;
+  color: white;
+  font-size: 2rem;
+  margin-top: 25vh;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  text-wrap: balance;
+}
+.texto-inicial.oculto {
+  opacity: 0;
+  display: none;
 }

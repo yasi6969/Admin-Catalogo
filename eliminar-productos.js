@@ -62,19 +62,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     const productoId = e.target.dataset.id;
                     const descripcion = e.target.dataset.descripcion;
                     
-                    // Mostrar confirmación
+                    // Primera confirmación
                     if (confirm(`¿Estás seguro de eliminar el producto "${descripcion}"?`)) {
-                        try {
-                            // Eliminar producto de Firestore
-                            await window.firebaseDb.collection('productos').doc(productoId).delete();
-                            
-                            console.log(`🗑️ Producto eliminado: ${productoId}`);
-                            
-                            // Recargar productos y actualizar contador
-                            await cargarProductos();
-                            await actualizarContadorProductos();
-                        } catch (error) {
-                            console.error('Error al eliminar producto:', error);
+                        // Segunda confirmación
+                        if (confirm(`¿De verdad verdad estás segura de eliminar el producto "${descripcion}"?`)) {
+                            try {
+                                // Eliminar producto de Firestore
+                                await window.firebaseDb.collection('productos').doc(productoId).delete();
+                                
+                                console.log(`🗑️ Producto eliminado: ${productoId}`);
+                                
+                                // Recargar productos y actualizar contador
+                                await cargarProductos();
+                                await actualizarContadorProductos();
+                            } catch (error) {
+                                console.error('Error al eliminar producto:', error);
+                            }
                         }
                     }
                 });
@@ -84,6 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
             gridEliminar.innerHTML = `<p>Error al cargar productos: ${error.message}</p>`;
         }
     }
+
+    // Hacer la función disponible globalmente
+    window.cargarProductosEliminar = cargarProductos;
 
     // Filtrar productos
     if (filtroDescripcion) {

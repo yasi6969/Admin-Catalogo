@@ -37,16 +37,17 @@
 
   <main class="main-container">
     <div class="main-actions">
-      <button id="btn-agregar" class="main-action-btn">
+      <button id="btn-agregar" class="main-action-btn boton-seccion">
         <i class="fas fa-plus"></i> Agregar
       </button>
-      <button id="btn-editar" class="main-action-btn">
+      <button id="btn-editar" class="main-action-btn boton-seccion">
         <i class="fas fa-edit"></i> Editar
       </button>
-      <button id="btn-eliminar" class="main-action-btn">
+      <button id="btn-eliminar" class="main-action-btn boton-seccion">
         <i class="fas fa-trash"></i> Eliminar
       </button>
     </div>
+    
     <div id="filtro-productos-container" style="display: none;">
       <input type="text" id="filtro-descripcion" placeholder="Buscar por nombre, descripción, id, categoría...">
     </div>
@@ -97,14 +98,13 @@
       </div>
     </section>
     <section id="productos-editar-grid" style="display:none;">
-      <div id="productos-editar-grid">
-
-      </div>
     </section>
     <section id="productos-eliminar-grid" style="display:none;"></section>
   </main>
 
-
+  <div id="texto-inicial" class="texto-inicial">
+    <h2>¿Qué quieres realizar hoy?</h2>
+  </div>
   <div id="welcome-modal" class="modal" style="display:none;">
     <div class="modal-content">
       <h1>Bienvenida a Smaguiett Catálogo</h1>
@@ -156,6 +156,20 @@
     }
 
     window.mostrarSeccion = mostrarSeccion;
+  </script>
+
+  <script>
+    // Agregar lógica para mostrar/ocultar texto inicial
+    document.addEventListener('DOMContentLoaded', () => {
+      const textoInicial = document.getElementById('texto-inicial');
+      const botonesSeccion = document.querySelectorAll('.boton-seccion');
+
+      botonesSeccion.forEach(boton => {
+        boton.addEventListener('click', () => {
+          textoInicial.classList.add('oculto');
+        });
+      });
+    });
   </script>
 
   <script src="agregar-productos.js"></script>

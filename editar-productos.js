@@ -302,6 +302,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cargar datos del producto en el modal de edición
     function cargarDatosProductoEnModal(producto) {
+        // Clear any previous success or error messages
+        const mensajeEstadoEditar = document.getElementById('mensajeEstadoEditar');
+        if (mensajeEstadoEditar) {
+            mensajeEstadoEditar.textContent = '';
+            mensajeEstadoEditar.classList.remove('exito', 'error');
+        }
+
         document.getElementById('categoria-editar').value = producto.categoria;
         document.getElementById('descripcionCorta-editar').value = producto.descripcion_corta;
         document.getElementById('descripcionLarga-editar').value = producto.descripcion_larga;
