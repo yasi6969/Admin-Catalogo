@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smaguiett Catálogo Config</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="firebase-config.js"></script>
+</head>
+<body>
+  <div class="fondo">
+    <div class="meteoro"></div>
+    <div class="meteoro"></div>
+    <div class="meteoro"></div>
+    <div class="meteoro"></div>
+    <div class="meteoro"></div>
+  </div>
+  <header class="header">
+    <div class="header-text">
+      Bienvenid@
+    </div>
+    <div id="login-container">
+      <button id="product-count-btn" class="btn-product-count">
+        <i class="fas fa-box"></i> Productos: <span id="productCount">0</span>
+      </button>
+      <button id="login-btn" class="btn-login">
+        <i class="fas fa-user"></i> Iniciar sesión
+      </button>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div class="main-actions">
+      <button id="btn-agregar" class="main-action-btn">
+        <i class="fas fa-plus"></i> Agregar
+      </button>
+      <button id="btn-editar" class="main-action-btn">
+        <i class="fas fa-edit"></i> Editar
+      </button>
+      <button id="btn-eliminar" class="main-action-btn">
+        <i class="fas fa-trash"></i> Eliminar
+      </button>
+    </div>
+    <div id="filtro-productos-container" style="display: none;">
+      <input type="text" id="filtro-descripcion" placeholder="Buscar por descripción...">
+    </div>
+    <section id="productos-añadir-form" style="display:none;">
+      <div class="formulario-agregar-producto">
+        <form id="formularioAgregarProducto" class="formulario-producto">
+          <div class="input-group">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria" required>
+              <option value="">Seleccione una categoría</option>
+              <option value="categoria1">Categoría 1</option>
+              <option value="categoria2">Categoría 2</option>
+              <option value="categoria3">Categoría 3</option>
+              <option value="categoria4">Categoría 4</option>
+              <option value="categoria5">Categoría 5</option>
+              <option value="categoria6">Categoría 6</option>
+              <option value="categoria7">Categoría 7</option>
+              <option value="categoria8">Categoría 8</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="descripcionCorta">Descripción Corta / Nombre</label>
+            <input type="text" id="descripcionCorta" name="descripcionCorta" required>
+          </div>
+          <div class="input-group">
+            <label for="descripcionLarga">Descripción Larga</label>
+            <textarea id="descripcionLarga" name="descripcionLarga" rows="4" required></textarea>
+          </div>
+          <div class="input-group">
+            <label for="enlace">Enlace a whatsa individual</label>
+            <input type="url" id="enlace" name="enlace" placeholder="Texto (El enlace se genera automaticamente)">
+          </div>
+          <div class="input-group">
+            <label for="id">ID</label>
+            <input type="text" id="id" name="id" placeholder="C1-1a o C1-2 o C2-1">
+          </div>
+          <div class="input-group">
+            <label for="imagen">Link de Imagen</label>
+            <input type="text" id="imagen" name="imagen" placeholder="/imagenes/catalogo/nombre">
+          </div>
+          <div class="input-group">
+            <label for="precio">Precio</label>
+            <input type="text" id="precio" name="precio" placeholder="$1.000" required>
+          </div>
+          <div class="mensaje-estado" id="mensajeEstado"></div>
+          <button type="button" id="agregarProductoBtn" class="btn-agregar-producto">Agregar Producto</button>
+        </form>
+      </div>
+    </section>
+    <section id="productos-editar-grid" style="display:none;">
+      <div id="productos-editar-grid">
+
+      </div>
+    </section>
+    <section id="productos-eliminar-grid" style="display:none;"></section>
+  </main>
+
+
+  <div id="welcome-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h1>Bienvenida a Smaguiett Catálogo</h1>
+      <p>Hola, Niia. Esta página permite cambiar, editar y subir productos a la base de datos.</p>
+      <div class="modal-buttons">
+        <button id="close-welcome-modal" class="close-modal-btn">Cerrar</button>
+        <button id="never-show-modal" class="never-show-modal-btn">Nunca mostrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    
+    window.firebaseApp = firebase.app();
+    window.firebaseDb = db;
+    window.firebaseAuth = auth;
+  </script>
+
+  <script src="login.js"></script>
+  <script src="welcome-modal.js"></script>
+  <script>
+    function mostrarSeccion(seccion) {
+        const secciones = document.querySelectorAll('section');
+        secciones.forEach(s => s.style.display = 'none');
+        const seccionSeleccionada = document.getElementById(seccion);
+        if (seccionSeleccionada) {
+            seccionSeleccionada.style.display = 'block';
+        }
+        
+        const filtroContainer = document.getElementById('filtro-productos-container');
+        const productosGrid = document.getElementById('productos-editar-grid');
+        
+        const seccionesMostrarFiltro = ['editar', 'eliminar'];
+        
+        if (seccionesMostrarFiltro.includes(seccion)) {
+            if (filtroContainer) filtroContainer.style.display = 'flex';
+            if (productosGrid) productosGrid.style.display = 'grid';
+            
+            if (seccion === 'editar') {
+                window.cargarProductosEditar();
+            }
+        } else {
+            if (filtroContainer) filtroContainer.style.display = 'none';
+            if (productosGrid) productosGrid.style.display = 'none';
+        }
+    }
+
+    window.mostrarSeccion = mostrarSeccion;
+  </script>
+
+  <script src="agregar-productos.js"></script>
+  <script src="editar-productos.js"></script>
+  <script src="eliminar-productos.js"></script>
+  <script src="productos.js"></script>
+
+  
+  
+</body>
+</html>
