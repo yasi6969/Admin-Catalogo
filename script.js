@@ -1,19 +1,16 @@
 const installContainer = document.getElementById('install-container');
 const installBtn = document.getElementById('install-app-btn');
-
 let deferredPrompt = null;
 
-// Detectar si la app ya está instalada
-function isAppInstalled() {
+function isRunningAsApp() {
   return (
     window.matchMedia('(display-mode: standalone)').matches ||
-    window.navigator.standalone === true ||
+    navigator.standalone === true ||
     document.referrer.startsWith('android-app://')
   );
 }
 
-// Mostrar solo si no es app
-if (!isAppInstalled()) {
+if (!isRunningAsApp()) {
   installContainer.style.display = 'block';
 
   window.addEventListener('beforeinstallprompt', (e) => {
@@ -26,6 +23,9 @@ if (!isAppInstalled()) {
       deferredPrompt.prompt();
       await deferredPrompt.userChoice;
       deferredPrompt = null;
+    } else {
+      alert('La app ya está instalada. Ábrela desde tu inicio o escritorio.');
+      window.location.href = '/';
     }
   });
 }
