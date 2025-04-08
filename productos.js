@@ -38,32 +38,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
         seccion.style.display = seccion === seccionAgregar ? 'block' : 'grid';
         
-        switch(animacion) {
-            case 'right':
-                seccion.style.transform = 'translateX(20%)';
-                break;
-            case 'bottom':
-                seccion.style.transform = 'translateY(30%)';
-                break;
-            default:
-                seccion.style.transform = 'translateX(-20%)';
-        }
+        if (seccion === seccionEditar) {
+            // Transición más rápida y sutil para editar
+            seccion.style.transition = 'all 0.2s ease-out';
+            seccion.style.opacity = '0';
+            seccion.style.transform = 'scale(0.95) translateY(10px)';
+            
+            requestAnimationFrame(() => {
+                seccion.style.opacity = '1';
+                seccion.style.transform = 'scale(1) translateY(0)';
+            });
 
-        if (filtro) {
-            filtro.style.display = 'flex';
-            resetearEstilos(filtro);
-        }
-
-        requestAnimationFrame(() => {
-            seccion.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-            seccion.style.opacity = '1';
-            seccion.style.transform = 'translate(0)';
+            // Mostrar filtro de productos
+            if (filtroProductosContainer) {
+                filtroProductosContainer.style.display = 'flex';
+            }
+        } else {
+            // Mantener animación original para agregar y eliminar
+            switch(animacion) {
+                case 'right':
+                    seccion.style.transform = 'translateX(20%)';
+                    break;
+                case 'bottom':
+                    seccion.style.transform = 'translateY(30%)';
+                    break;
+                default:
+                    seccion.style.transform = 'translateX(-20%)';
+            }
 
             if (filtro) {
-                filtro.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-                filtro.style.opacity = '1';
+                filtro.style.display = 'flex';
+                resetearEstilos(filtro);
             }
-        });
+
+            requestAnimationFrame(() => {
+                seccion.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                seccion.style.opacity = '1';
+                seccion.style.transform = 'translate(0)';
+
+                if (filtro) {
+                    filtro.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                    filtro.style.opacity = '1';
+                }
+            });
+        }
     }
 
     function manejarBotonesActivos(botonActivo) {

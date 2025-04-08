@@ -2,31 +2,21 @@
 * {
   box-sizing: border-box;
 }
+
+html {
+  overflow-y: scroll;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #111;
   position: relative;
-  height: 100%;
-  overflow-x: hidden;
-  padding-bottom: 50px; /* Espacio para el texto al final */
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
 }
-
-body.no-scroll {
-    overflow: hidden;
-    padding-right: var(--scrollbar-width, 0px);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-}
-
-
-
-
-/* Scrollbar transparente */
-
 
 @keyframes backgroundColorMove {
   0% {
@@ -640,12 +630,6 @@ h2 {
 }
 
 
-body, html {
-  background: #000; 
-  position: relative;
-  z-index: 0;
-}
-
 .fondo {
   position: fixed;
   top: 0;
@@ -716,40 +700,26 @@ body, html {
 color: #fff;
 justify-content: center;
 font-size: clamp(1.5rem, 2vw, 2rem);
+text-wrap: balance;
 }
 
 .main-container {
   position: relative;
 }
 
-.finaltext {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  text-align: right;
-  padding-right: 10px;
-  color: #888;
-  font-size: 0.8rem;
+
+.modal-open {
+  overflow: hidden;
+  position: fixed;
   width: 100%;
 }
-html {
-  overflow-y: scroll;
-  scrollbar-gutter: stable;
-}
-html {
-  scrollbar-color: #5b1669 transparent;
-  scrollbar-width: thin;
+
+
+.finaltext {
+  margin-top: auto;
+  text-align: right;
+  padding: 10px;
+  color: #888;
+  font-size: 0.8rem;
 }
 
-html::-webkit-scrollbar {
-  width: 10px;
-}
-
-html::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-html::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  border-radius: 10px;
-}

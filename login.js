@@ -38,18 +38,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function abrirModal() {
         const scrollY = window.scrollY;
+        document.body.classList.add('modal-open');
         document.body.style.position = 'fixed';
         document.body.style.top = `-${scrollY}px`;
-        document.body.classList.add('no-scroll');
         modalCierreSesion.style.display = 'flex';
     }
 
     function cerrarModal() {
         const scrollY = parseInt(document.body.style.top) * -1;
         modalCierreSesion.style.display = 'none';
-        document.body.classList.remove('no-scroll');
+        document.body.classList.remove('modal-open');
         document.body.style.position = '';
-        document.body.style.top = '';
         window.scrollTo(0, scrollY);
     }
 
