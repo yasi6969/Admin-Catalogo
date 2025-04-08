@@ -1,4 +1,4 @@
-import { db } from './firebase.js'; // Importas desde tu firebase.js privado
+import { db } from './firebase.js'; 
 
 console.warn('🚨 product-counter.js cargado');
 
@@ -32,10 +32,8 @@ async function contarProductos() {
 document.addEventListener('DOMContentLoaded', () => {
   console.warn('🌐 DOM completamente cargado');
 
-  // Mostrar conteo al cargar
   contarProductos();
 
-  // Esperar a que el botón esté en el DOM
   setTimeout(() => {
     const productCountBtn = document.getElementById('product-count-btn');
     const productCountSpan = document.getElementById('productCount');

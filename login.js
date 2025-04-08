@@ -119,13 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 loginBtn.innerHTML = `
                     <img src="${user.photoURL || 'path/to/default/avatar.png'}" 
-                         alt="Foto de perfil" 
-                         class="user-photo">
+                    alt="Foto de perfil" 
+                    class="user-photo">
                     ${user.displayName || user.email}
                 `;
                 loginBtn.classList.add('logged-in');
-                
-                // Contar productos
+
                 await contarProductos();
             } catch (error) {
                 console.error('Error en inicio de sesión:', error);

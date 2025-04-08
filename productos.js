@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         seccion.style.display = seccion === seccionAgregar ? 'block' : 'grid';
         
         if (seccion === seccionEditar) {
-            // Transición más rápida y sutil para editar
+
             seccion.style.transition = 'all 0.2s ease-out';
             seccion.style.opacity = '0';
             seccion.style.transform = 'scale(0.95) translateY(10px)';
@@ -49,12 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 seccion.style.transform = 'scale(1) translateY(0)';
             });
 
-            // Mostrar filtro de productos
             if (filtroProductosContainer) {
                 filtroProductosContainer.style.display = 'flex';
             }
         } else {
-            // Mantener animación original para agregar y eliminar
+
             switch(animacion) {
                 case 'right':
                     seccion.style.transform = 'translateX(20%)';
