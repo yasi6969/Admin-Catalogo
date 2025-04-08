@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const clickSound = new Audio('sound/click.mp3');
-    
-    function playClickSound() {
+    const sonidoDeClic = new Audio('sound/click.mp3');
+
+    function reproducirSonidoDeClic() {
         try {
-            clickSound.currentTime = 0;
-            clickSound.play().catch(error => {
+            sonidoDeClic.currentTime = 0;
+            sonidoDeClic.play().catch(error => {
                 console.error('Error reproduciendo sonido de clic:', error);
             });
         } catch (error) {
@@ -12,35 +12,65 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    document.querySelectorAll('button').forEach(button => {
-        button.addEventListener('click', () => {
-            playClickSound();
+    document.querySelectorAll('button').forEach(boton => {
+        boton.addEventListener('click', () => {
+            reproducirSonidoDeClic();
         });
     });
 
-    const installButton = document.getElementById('install-app-btn');
-    let deferredPrompt;
+    const botonInstalacion = document.getElementById('install-app-btn');
+    let solicitudInstalacion = null;
+
+    function actualizarEstadoBotonInstalacion() {
+        const esModoStandalone = window.matchMedia('(display-mode: standalone)').matches || 
+                                 window.navigator.standalone === true;
+
+        if (esModoStandalone) {
+            botonInstalacion.style.display = 'none';
+            return;
+        }
+
+        const appInstalada = localStorage.getItem('appInstalada') === 'true';
+
+        if (appInstalada) {
+            botonInstalacion.innerHTML = '<span>Abrir app</span>';
+            botonInstalacion.style.display = 'flex';
+            botonInstalacion.onclick = () => {
+                window.open(window.location.origin, '_blank', 'noopener');
+            };
+        } else if (solicitudInstalacion) {
+            botonInstalacion.innerHTML = '<i class="fas fa-download"></i> Instalar';
+            botonInstalacion.style.display = 'flex';
+            botonInstalacion.onclick = async () => {
+                try {
+                    solicitudInstalacion.prompt();
+                    const { outcome } = await solicitudInstalacion.userChoice;
+                    if (outcome === 'accepted') {
+                        console.log('Aplicación instalada exitosamente');
+                    }
+                } catch (error) {
+                    console.error('Error al intentar instalar:', error);
+                } finally {
+                    solicitudInstalacion = null;
+                    actualizarEstadoBotonInstalacion();
+                }
+            };
+        } else {
+            botonInstalacion.style.display = 'none';
+        }
+    }
 
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
-        deferredPrompt = e;
-        installButton.style.display = 'flex';
-    });
-
-    installButton.addEventListener('click', async () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                console.log('Aplicación instalada exitosamente');
-            }
-            deferredPrompt = null;
-            installButton.style.display = 'none';
-        }
+        solicitudInstalacion = e;
+        actualizarEstadoBotonInstalacion();
     });
 
     window.addEventListener('appinstalled', () => {
         console.log('La aplicación fue instalada');
-        installButton.style.display = 'none';
+        localStorage.setItem('appInstalada', 'true');
+        actualizarEstadoBotonInstalacion();
     });
+
+    actualizarEstadoBotonInstalacion();
 });

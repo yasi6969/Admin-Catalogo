@@ -9,17 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const idInput = document.getElementById('id');
     const enlaceInput = document.getElementById('enlace');
     const db = window.firebaseDb;
+    const auth = window.firebaseAuth;
 
     const IMAGEN_POR_DEFECTO = "/imagenes/catalogo/producto_sin_definir.png";
 
-    // Generar enlace de WhatsApp
     function generarEnlaceWhatsApp(mensaje) {
         const telefono = '573053662867';
         const mensajeCodificado = encodeURIComponent(mensaje);
         return `https://wa.me/${telefono}?text=${mensajeCodificado}`;
     }
 
-    // Evento para generar enlace de WhatsApp
     enlaceInput.addEventListener('blur', () => {
         const mensajeWhatsApp = enlaceInput.value.trim();
         
@@ -29,12 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Limpiar precio antes de guardar
     function limpiarPrecio(precioFormateado) {
         return precioFormateado.trim();
     }
 
-    // Formatear precio con $ y puntos de mil
     function formatearPrecio() {
         let valor = precioInput.value.replace(/\$/g, '').trim();
         
@@ -51,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
         precioInput.value = '$' + precioFormateado;
     }
 
-    // Manejar imagen por defecto
     imagenInput.addEventListener('focus', () => {
         if (imagenInput.value.trim() === IMAGEN_POR_DEFECTO) {
             imagenInput.value = '';
@@ -64,12 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Establecer imagen por defecto al cargar
     if (imagenInput.value.trim() === '') {
         imagenInput.value = IMAGEN_POR_DEFECTO;
     }
 
-    // Normalizar ID para URL y base de datos
     function normalizarId(texto) {
         return texto.toLowerCase()
             .normalize('NFD')
@@ -79,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/^-|-$/g, '');
     }
 
-    // Validar y generar ID
     function validarYGenerarId() {
         const categoriaSeleccionada = categoriaSelect.value;
         
@@ -101,16 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return id;
     }
 
-    // Eventos de precio
     precioInput.addEventListener('input', formatearPrecio);
     precioInput.addEventListener('focus', formatearPrecio);
 
-    // Eventos de ID
     idInput.addEventListener('input', () => {
         idInput.value = validarYGenerarId();
     });
 
-    // Generar ID por categoría
     function generarIdPorCategoria(categoria) {
         const mapeoCategoria = {
             'categoria1': 'C1-',
@@ -125,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return mapeoCategoria[categoria] || 'C1-';
     }
 
-    // Bloquear edición del prefijo de categoría en ID
     idInput.addEventListener('keydown', (e) => {
         const categoriaSeleccionada = categoriaSelect.value;
         const prefijoCategoria = generarIdPorCategoria(categoriaSeleccionada);
@@ -144,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Establecer prefijo de categoría automáticamente
     categoriaSelect.addEventListener('change', () => {
         const categoriaSeleccionada = categoriaSelect.value;
         
@@ -163,13 +151,26 @@ document.addEventListener('DOMContentLoaded', () => {
         idInput.value = prefijoCategoria + valorSinPrefijo;
     });
 
-    // Sanitizar entradas
     function sanitizarEntrada(texto) {
         return texto ? texto.trim() : '';
     }
 
-    // Evento de agregar producto
     btnAgregarProducto.addEventListener('click', async () => {
+        const usuarioActual = auth.currentUser;
+        if (!usuarioActual) {
+            mensajeEstado.textContent = 'Por favor, inicia sesión primero para agregar productos.';
+            mensajeEstado.style.color = 'red';
+            
+            const botonLogin = document.getElementById('login-btn');
+            if (botonLogin) {
+                botonLogin.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    botonLogin.style.animation = '';
+                }, 500);
+            }
+            return;
+        }
+
         const categoria = sanitizarEntrada(categoriaSelect.value);
         const descripcion_corta = sanitizarEntrada(descripcionCortaInput.value);
         const descripcion_larga = sanitizarEntrada(document.getElementById('descripcionLarga').value);
@@ -178,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const id = sanitizarEntrada(idInput.value);
         const precio = limpiarPrecio(precioInput.value);
 
-        // Validaciones
         if (!categoria || !descripcion_corta || !descripcion_larga || !id || !precio) {
             mensajeEstado.textContent = 'Por favor, complete todos los campos obligatorios.';
             mensajeEstado.style.color = 'red';
@@ -186,7 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            // Verificar si el ID ya existe
             const idExistenteSnapshot = await db.collection('productos')
                 .where('id', '==', id)
                 .get();
@@ -197,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Agregar producto a Firestore
             const nuevoProductoRef = await db.collection('productos').add({
                 categoria,
                 descripcion_corta,
@@ -208,14 +206,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 precio
             });
 
-            // Actualizar contador de productos
             const productCountElement = document.getElementById('productCount');
             if (productCountElement) {
                 const currentCount = parseInt(productCountElement.textContent, 10);
                 productCountElement.textContent = currentCount + 1;
             }
 
-            // Actualizar grids de editar y eliminar
             if (window.cargarProductosEditar) {
                 window.cargarProductosEditar();
             }
@@ -223,11 +219,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.cargarProductosEliminar();
             }
 
-            // Limpiar formulario
             formularioAgregarProducto.reset();
             imagenInput.value = IMAGEN_POR_DEFECTO;
-
-            // Mensaje de éxito
             mensajeEstado.textContent = `Producto "${descripcion_corta}" agregado correctamente.`;
             mensajeEstado.style.color = 'green';
 
