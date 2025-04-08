@@ -1,7 +1,7 @@
 {
     "name": "Administrar Catalogo",
-    "short_name": "CatálogoAdmin",
-    "version": "1.0.3",
+    "short_name": "Catálogo Admin",
+    "version": "1.0.4",
     "description": "Una página para administrar el catálogo de la base de datos.",
     "start_url": "/",
     "display": "standalone",
