@@ -36,12 +36,12 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center; 
-  padding: 10px 0 10px 0;
   border-radius: 10px;
   margin: 10px auto;
   gap: 15px;
   width: 90%;
   padding: 20px;
+  padding-top: 30px;
 }
 
 
@@ -215,6 +215,7 @@ button:hover {
   border-radius: 10px;
   margin: 20px auto;
   padding: 20px;
+  padding-top: 0;
   position: relative;
   z-index: 1;
 }
@@ -699,6 +700,8 @@ h2 {
 }
 
 #texto-inicial {
+  flex:1;
+  align-items: center;
 color: #fff;
 justify-content: center;
 font-size: clamp(1.5rem, 2vw, 2rem);
