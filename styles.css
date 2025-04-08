@@ -721,6 +721,8 @@ text-wrap: balance;
   color: #888;
   font-size: 0.8rem;
   margin: 0;
+  flex: 1;
+  text-align: end;
 }
 
 .install-section {
@@ -758,3 +760,5 @@ text-wrap: balance;
   margin-left: 5px;
   color: #fff;
 }
+
+

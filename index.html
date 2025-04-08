@@ -13,13 +13,13 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="firebase-config.js"></script>
   <link rel="manifest" href="/manifest.json" />
-<meta name="theme-color" content="#0d1b2a" />
+  <meta name="theme-color" content="#0d1b2a" />
+
 <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service-worker.js');
   }
 </script>
-
 </head>
 <body>
   <div class="fondo">
@@ -126,6 +126,21 @@
     
   </div>
 
+  <div class="install-section">
+    <div id="install-container" style="display:none;">
+      <button id="install-app-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        <span>Instalar</span>
+      </button>
+    </div>
+    <p class="finaltext">Desarrollado por Santiago Cardona 😼</p>
+  </div>
+
+  
   <script>
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
@@ -142,20 +157,10 @@
   <script src="editar-productos.js"></script>
   <script src="eliminar-productos.js"></script>
   <script src="productos.js"></script>
+  <script src="sound.js"></script>
   <script src="script.js"></script>
 
-  <div class="install-section">
-    <div id="install-container">
-      <button id="install-app-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="7 10 12 15 17 10"/>
-          <line x1="12" y1="15" x2="12" y2="3"/>
-        </svg>
-        <span>Instalar</span>
-      </button>
-    </div>
-    <p class="finaltext">Desarrollado por Santiago Cardona 😼</p>
-  </div>
+
+  
 </body>
 </html>
