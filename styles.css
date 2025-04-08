@@ -8,7 +8,7 @@ body {
   padding: 0;
   background-color: #111;
   position: relative;
-  min-height: 99vh;
+  height: 100%;
   overflow-x: hidden;
   padding-bottom: 50px; /* Espacio para el texto al final */
 }
