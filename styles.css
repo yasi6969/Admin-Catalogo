@@ -156,12 +156,14 @@ button:hover {
   background-size: 200% 200%;
 
 }
-
+.no-scroll {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
 .modal {
   position: fixed;
   z-index: 1000;
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -173,7 +175,7 @@ button:hover {
 }
 
 .modal-content {
-  max-height: 90vh;
+  max-height: 90%;
   overflow-y: auto;
   padding: 25px;
   max-width: 500px;
@@ -371,23 +373,39 @@ max-height: 200px;
     display: none;
     position: fixed;
     z-index: 1000;
-    overflow: auto;
     background-color: rgba(0,0,0,0.4);
 
 }
+#modal-edicion-producto .modal-content {
+  overflow-y: auto; 
+}
+
+#modal-edicion-producto .modal-content::-webkit-scrollbar {
+  width: 0;
+}
+
+
+body::-webkit-scrollbar {
+  width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #00ffd5, #ffffff);
+  background-size: 100% 100%;
+  border-radius: 20px;
+}
+
 
 #modal-edicion-producto .modal-content {
   background-color: transparent;
   backdrop-filter: blur(30px);
   color: #fff;
   text-align: left;
-    margin:10vh auto;
     padding: 20px;
     border: 2px solid #888;
     width: 90%;
     max-width: 600px;
     border-radius: 10px;
-    max-height: 80vh;
 }
 
 

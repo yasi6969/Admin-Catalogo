@@ -64,18 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function openModal() {
         const scrollY = window.scrollY;
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${scrollY}px`;
         document.body.classList.add('no-scroll');
-        modalEdicion.style.display = 'block';
+        modalEdicion.style.display = 'flex';
     }
 
     function closeModal() {
         const scrollY = parseInt(document.body.style.top) * -1;
         modalEdicion.style.display = 'none';
         document.body.classList.remove('no-scroll');
-        document.body.style.position = '';
-        document.body.style.top = '';
         window.scrollTo(0, scrollY);
     }
 
