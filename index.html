@@ -116,7 +116,7 @@
 
   <div id="welcome-modal" class="modal" style="display:none;">
     <div class="modal-content">
-      <h1>Smaguiett Catálogo Admin</h1>
+      <h1>SmaguieTT Catálogo Admin</h1>
       <p>Esta página permite cambiar, editar y subir productos a la base de datos.</p>
       <div class="modal-buttons">
         <button id="close-welcome-modal" class="close-modal-btn">Cerrar</button>
@@ -125,7 +125,7 @@
     </div>
     
   </div>
-  <p class="finaltext">Desarrollado por Santiago Cardona 😼</p>
+
   <script>
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
@@ -142,8 +142,20 @@
   <script src="editar-productos.js"></script>
   <script src="eliminar-productos.js"></script>
   <script src="productos.js"></script>
+  <script src="script.js"></script>
 
-  
-  
+  <div class="install-section">
+    <div id="install-container">
+      <button id="install-app-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        <span>Instalar</span>
+      </button>
+    </div>
+    <p class="finaltext">Desarrollado por Santiago Cardona 😼</p>
+  </div>
 </body>
 </html>

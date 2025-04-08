@@ -3,7 +3,7 @@
     "short_name": "CatálogoAdmin",
     "version": "1.0.3",
     "description": "Una página para administrar el catálogo de la base de datos.",
-    "start_url": "https://71dxdesr6578ed1a53.netlify.app/",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#000000",
     "theme_color": "#0d1b2a",
@@ -19,5 +19,4 @@
         "type": "image/png"
       }
     ]
-  }
-  
+}

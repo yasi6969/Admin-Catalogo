@@ -1,10 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const alertSound = new Audio('sound/alert.mp3');
     const gridEliminar = document.getElementById('productos-eliminar-grid');
     const filtroDescripcion = document.getElementById('filtro-descripcion');
     const productCountElement = document.getElementById('productCount');
 
     let productoAEliminar = null;
 
+    function playAlertSound() {
+        try {
+            alertSound.currentTime = 0;
+            alertSound.play().catch(error => {
+                console.error('Error reproduciendo sonido de alerta:', error);
+            });
+        } catch (error) {
+            console.error('Error al intentar reproducir sonido de alerta:', error);
+        }
+    }
 
     async function actualizarContadorProductos() {
         try {
@@ -61,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const productoId = e.target.dataset.id;
                     const descripcion = e.target.dataset.descripcion;
                     
+                    playAlertSound();
 
                     if (confirm(`¿Estás seguro de eliminar el producto "${descripcion}"?`)) {
 
