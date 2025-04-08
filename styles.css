@@ -23,10 +23,7 @@ body.no-scroll {
 }
 
 
-html {
-  overflow-y: scroll;
-  scrollbar-gutter: stable;
-}
+
 
 /* Scrollbar transparente */
 
@@ -735,7 +732,10 @@ font-size: clamp(1.5rem, 2vw, 2rem);
   font-size: 0.8rem;
   width: 100%;
 }
-
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
 html {
   scrollbar-color: #5b1669 transparent;
   scrollbar-width: thin;
