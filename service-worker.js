@@ -1,4 +1,4 @@
-const CACHE_NAME = 'smaguiett-catalogo-v1';
+const CACHE_NAME = 'smaguiett-catalogo-v2';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
@@ -38,19 +38,15 @@ self.addEventListener("activate", (event) => {
 self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(event.request).then((response) => {
-            // Devolver caché si está disponible
             if (response) {
                 return response;
             }
 
-            // Solicitar recurso de la red
             return fetch(event.request).then((response) => {
-                // Verificar si la respuesta es válida
                 if (!response || response.status !== 200 || response.type !== 'basic') {
                     return response;
                 }
 
-                // Clonar la respuesta para caché
                 const responseToCache = response.clone();
                 
                 caches.open(CACHE_NAME).then((cache) => {

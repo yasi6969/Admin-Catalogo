@@ -30,9 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const appInstalada = localStorage.getItem('appInstalada') === 'true';
+        let appInstalada = localStorage.getItem('appInstalada') === 'true';
 
-        if (appInstalada) {
+        if (appInstalada && !solicitudInstalacion) {
             botonInstalacion.innerHTML = '<span>Abrir app</span>';
             botonInstalacion.style.display = 'flex';
             botonInstalacion.onclick = () => {
@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error('Error al intentar instalar:', error);
                 } finally {
                     solicitudInstalacion = null;
+                    localStorage.setItem('appInstalada', 'true');
                     actualizarEstadoBotonInstalacion();
                 }
             };
@@ -72,5 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
         actualizarEstadoBotonInstalacion();
     });
 
-    actualizarEstadoBotonInstalacion();
+    setTimeout(() => {
+        const esModoStandalone = window.matchMedia('(display-mode: standalone)').matches || 
+                                 window.navigator.standalone === true;
+        if (!esModoStandalone && !solicitudInstalacion) {
+            localStorage.removeItem('appInstalada');
+        }
+        actualizarEstadoBotonInstalacion();
+    }, 1000);
 });
